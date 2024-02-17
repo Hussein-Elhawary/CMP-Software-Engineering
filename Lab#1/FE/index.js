@@ -31,22 +31,51 @@ function fetchEmployees() {
 
 // TODO
 // add event listener to submit button
-
+document.getElementById('employeeForm').addEventListener('submit', (e)  => {
+  e.preventDefault();
+  createEmployee();
+})
 // TODO
 // add event listener to delete button
+document.getElementById('dataTable').addEventListener('click', (e) => {
+  let x = e.target.parentElement.parentElement.firstChild.textContent;
+  deleteEmployee(x);
+})
 
 // TODO
 function createEmployee (){
   // get data from input field
   // send data to BE
   // call fetchEmployees
+  const name1 = document.getElementById('name').value;
+  const id1 = document.getElementById('id').value;
+  fetch('http://localhost:3000/api/v1/employee', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ id:id1, name:name1 })})
+    .then(response => response.json())
+    .then(data => {
+      fetchEmployees()
+    })
+    .catch(error => console.error(error))
 }
 
+
 // TODO
-function deleteEmployee (){
+function deleteEmployee (id){
   // get id
   // send id to BE
   // call fetchEmployees
+  fetch(`http://localhost:3000/api/v1/employee/${id}`, {
+    method: 'DELETE',
+  })
+  .then(response => response.json())
+  .then(data => {
+    fetchEmployees()
+  })
+  .catch(error => console.error(error))
 }
 
 fetchEmployees()
