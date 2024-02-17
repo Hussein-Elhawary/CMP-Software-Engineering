@@ -9,7 +9,7 @@ exports.getEmployees = async (req, res, next) => {
 // TODO
 exports.deleteEmployee = async (req, res, next) => {
   id = req.params.id;
-  employee.splice(employee.findIndex((x) => x.id === id), 1);
+  employee.splice(employee.findIndex(), 1);
   res.status(200).json({ data: employee });
 };
 
